@@ -35,6 +35,9 @@ At minimum, this response model must contain these properties:
   - [x]	A string called statusDescription that tells the client if the call to the API endpoint was successful or not, and why.  
   - [x]	Lists of any applicable returned items as properties (only required if using a GET HTTP method at any point). Remember to use = new(). 
 
+<img src="postman_get.png" width=500><br>
+<img src="postman_post.png" width=500><br>
+
 ---
 ## Your database must have at least… 
 
