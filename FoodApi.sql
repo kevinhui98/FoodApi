@@ -9,7 +9,7 @@ create table Ingredient(
 );
 create table Food (
 	FoodId int not null auto_increment,
-    FoodName varchar(1000) not null,
+    FoodName varchar(1000) not null, 
     GlutenFree bool default null,
     Vegan bool default null,
     primary key (FoodId)
@@ -30,3 +30,11 @@ alter table Food modify GlutenFree bool default false;
 alter table Food modify Vegan bool default false;
 alter table ingredient drop column IngredientNmae;
 alter table ingredient add IngredientName varchar(1000) not null;
+insert into Ingredient (IngredientName, ServingSize, ServingSizeUnit) values ("flour", 49, "gram");
+insert into Food (FoodName, IngredientId, protein, carbs) values ("original glazed doughnut", 2, 3, 21);
+insert into Ingredient (IngredientName, ServingSize, ServingSizeUnit) values ("corn", 1, "ear");
+insert into Food (FoodName, IngredientId, Protein, carbs, Vegan, GlutenFree) values ("corn", 3,3,19,true,true);
+insert into Ingredient (IngredientName,servingSize,ServingSizeUnit) values ("spaghetti",2,"oz");
+insert into Food (FoodName,IngredientId, protein, carbs, vegan) values ("spaghetti and vegan meatball",4,8,53.6,true);
+create index healthy on food (vegan, glutenfree);
+alter table food drop index healthy;
