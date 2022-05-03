@@ -25,15 +25,15 @@ In the Ingredient table recording the serving size of the unit of the serving si
 - [x]	Your API needs to follow the MVC (Model-View-Controller) software design pattern.
 - 	Image for reference: 
 
-
+<img src="Picture1.png" width=500><br>
 
 - [x]	There must be at least one controller.
 - [x]	Models should be organized together and in their own folder. 
 - [x]	Your collection of models must also include a basic response model (named Response) that is consistently returned at the end of every request. 
 - At minimum, this response model must contain these properties:
-  - [ ]	An integer called statusCode with the value set appropriately (https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.http.statuscodes?view=aspnetcore-6.0) in the controller logic, depending on whether or not the call to the API endpoint was successful. 
-  - [ ]	A string called statusDescription that tells the client if the call to the API endpoint was successful or not, and why.  
-  - [ ]	Lists of any applicable returned items as properties (only required if using a GET HTTP method at any point). Remember to use = new(). 
+  - [x]	An integer called statusCode with the value set appropriately (https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.http.statuscodes?view=aspnetcore-6.0) in the controller logic, depending on whether or not the call to the API endpoint was successful. 
+  - [x]	A string called statusDescription that tells the client if the call to the API endpoint was successful or not, and why.  
+  - [x]	Lists of any applicable returned items as properties (only required if using a GET HTTP method at any point). Remember to use = new(). 
 
 ---
 ## Your database must have at least… 
@@ -45,8 +45,10 @@ In the Ingredient table recording the serving size of the unit of the serving si
 
 ---
 ## TODO:
-Create a get request with a list with vegan being true.
+</br>
+Create a get request with a list with vegan being true.</br>
 Create patch request to change a part of the data in the database.
+
 ---
 ## Grading Rubric: 
 
