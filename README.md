@@ -1,5 +1,5 @@
 # Food Api
----
+
 ## Reason:
 
 As we eat food we don't normally read the nutruition facts about the food or it is not possible to rectreive the information. There are also times you have these informations but there is not a way for you to relay these information swiftly.
