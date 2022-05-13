@@ -32,8 +32,8 @@ Image for reference:
 - [x]	Your collection of models must also include a basic response model (named Response) that is consistently returned at the end of every request. </br>
 At minimum, this response model must contain these properties:
   - [x]	An integer called statusCode with the value set appropriately (https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.http.statuscodes?view=aspnetcore-6.0) in the controller logic, depending on whether or not the call to the API endpoint was successful. 
-  - [ ]	A string called statusDescription that tells the client if the call to the API endpoint was successful or not, and why.  
-  - [ ]	Lists of any applicable returned items as properties (only required if using a GET HTTP method at any point). Remember to use = new(). 
+  - [x]	A string called statusDescription that tells the client if the call to the API endpoint was successful or not, and why.  
+  - [x]	Lists of any applicable returned items as properties (only required if using a GET HTTP method at any point). Remember to use = new(). 
 
 <img src="postman_get.png" width=500><br>
 <img src="postman_post.png" width=500><br>
@@ -49,7 +49,6 @@ At minimum, this response model must contain these properties:
 ---
 ## Improvements:
 </br>
-Create a get request with a list with vegan being true.</br>
 Create patch request to change a part of the data in the database.
 
 ---
