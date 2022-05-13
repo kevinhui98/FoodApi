@@ -1,7 +1,4 @@
-﻿#nullable disable
-using System;
-using System.Collections;
-using System.Collections.Specialized;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,8 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FoodApi.Models;
-using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 namespace FoodApi.Controllers
 {
@@ -27,37 +22,45 @@ namespace FoodApi.Controllers
 
         // GET: api/Food
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Food>>> GetFood()
+        public async Task<ActionResult<FoodResponse>> GetFood()
         {
-            
-            return await _context.Food.Include("Ingredient").ToListAsync();
+            var response = new FoodResponse();
+            var food = await _context.Food.ToListAsync();
+
+            if (food.Count == 0)
+            {
+                response.statusCode = 400;
+                response.statusDescription = "Process Failed!!! ";
+
+            }
+            else
+            {
+                response.statusCode = 200;
+                response.statusDescription = "Success!!!";
+                response.food = food;
+            }
+
+            return response;
         }
 
-        // GET: api/Food/id=5
-        [HttpGet("id={id}")]
-        public async Task<ActionResult<Food>> GetFood(int id)
+        // GET: api/Food/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<FoodResponse>> GetFood(int id)
         {
             var food = await _context.Food.FindAsync(id);
+            var response = new FoodResponse();
+            response.statusCode = 400;
+            response.statusDescription = "Process Failed. food Does Not Exist";
 
-            if (food == null)
+            if (food != null)
             {
-                return NotFound();
+                response.statusCode = 200;
+                response.statusDescription = "Success. Loading Requested food";
+                response.food.Add(food);
             }
 
-            return food;
+            return response;
         }
-
-        // GET: api/Food/vegan
-        [HttpGet("vegan={val}")]
-        public async Task<ActionResult<Food>> GetVegan(bool val)
-        {
-            if(val == true)
-            {
-                return await _context.Food.FindAsync(val);
-            }
-            return NotFound();
-        }
-
 
         // PUT: api/Food/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -89,53 +92,58 @@ namespace FoodApi.Controllers
 
             return NoContent();
         }
-        
-
-        /*[HttpPatch("{id}")]
-        public async Task<IActionResult> PatchFood(int FoodId, [FromBody] JsonPatchDocument<Food> foodUpdates)
-        {
-            var food = await _context.Food.FindAsync(FoodId);
-            if (food != null) 
-            {
-                foodUpdates.ApplyTo(food, ModelState); // Must have Microsoft.AspNetCore.Mvc.NewtonsoftJson installed
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-
-            
-            return NotFound();
-        }*/
 
         // POST: api/Food
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Food>> PostFood(Food food)
+        public async Task<ActionResult<FoodResponse>> PostFood(Food food)
         {
-            _context.Food.Add(food);
+            var response = new FoodResponse();
+
+            var result = _context.Food.Add(food);
+
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFood", new { id = food.FoodId }, food);
+            response.statusCode = 400;
+            response.statusDescription = "Process Failed. Please Check Food Values";
+
+            if (result != null)
+            {
+                response.statusCode = 200;
+                response.statusDescription = "Success. New Food Added";
+                response.food.Add(food);
+            }
+
+            return response;
         }
 
-        //DELETE: api/food/5
+        // DELETE: api/Food/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFood(int id)
+        public async Task<ActionResult<FoodResponse>> DeleteFood(int id)
         {
-            var food = await _context.Food.Include(c => c.Ingredient).FirstOrDefaultAsync(c => c.FoodId == id);
-            if(food == null)
+            var response = new FoodResponse();
+
+            var food = await _context.Food.FindAsync(id);
+            if (food == null)
             {
-                return NotFound();
+                response.statusCode = 400;
+                response.statusDescription = "Process Failed. food Does Not Exist.";
             }
-            _context.Food.Remove(food);
-            var ingredient = await _context.Ingredient.FirstOrDefaultAsync(e => e.IngredientId == food.Ingredient.IngredientId);
-            _context.Food.Remove(food);
+            else
+            {
+                response.statusCode = 200;
+                response.statusDescription = "Success. food Removed";
+                _context.Food.Remove(food);
+            }
+
             await _context.SaveChangesAsync();
-            return NoContent();
+
+            return response;
         }
 
         private bool FoodExists(int id)
         {
-            return _context.Food.Any(e => e.FoodId == id);
+            return (_context.Food?.Any(e => e.FoodId == id)).GetValueOrDefault();
         }
     }
 }
