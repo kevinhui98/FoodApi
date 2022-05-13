@@ -47,6 +47,9 @@ At minimum, this response model must contain these properties:
 - [x]	One additional constraint on a column that is NOT used as a primary key or a foreign key 
 
 ---
+### App Walkthough GIF
+
+<img src="foodApi.gif" width=1000><br>
 ## Improvements:
 </br>
 Create patch request to change a part of the data in the database.
