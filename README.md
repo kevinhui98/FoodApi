@@ -55,17 +55,7 @@ At minimum, this response model must contain these properties:
 Create patch request to change a part of the data in the database.
 
 ---
-## Grading Rubric: 
 
-- API Idea Presentation – 15% 
-- Three HTTP Methods – 15% 
-- Three API Endpoints – 15% 
-- API Design Follows MVC Architecture Pattern – 15% 
-- Consistent Response Model – 15% 
-- README – 5% 
-- SQL Script – 20%
-
----
 
 ## Resources:
 
